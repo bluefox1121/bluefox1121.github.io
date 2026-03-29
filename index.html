@@ -1,0 +1,362 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>OurCraft形而上学部 · 内部公告（扩编卷宗）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2a2a2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            font-family: 'Courier New', 'Times New Roman', '宋体', monospace;
+        }
+
+        .document-container {
+            max-width: 1100px;
+            width: 100%;
+            background: #fefcf5;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4), 0 0 0 1px #9c9c9c inset, 0 0 0 2px #f3f0e6 inset;
+            padding: 2.5rem 2.8rem;
+            position: relative;
+        }
+
+        .document-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .page-split {
+            margin: 2.8rem 0;
+            border: none;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, #5a5a5a, #5a5a5a 8px, transparent 8px, transparent 24px);
+            position: relative;
+        }
+        .page-split::after {
+            content: "? 形而上学部 · 封存卷宗续页 ?";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fefcf5;
+            padding: 0 1.2rem;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #6f6f6f;
+            font-family: monospace;
+        }
+
+        .page {
+            background: transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stamp-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.8rem;
+        }
+        .official-stamp {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2.5px solid #3d3d3d;
+            background: rgba(210,210,200,0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #3a3a3a;
+            box-shadow: 0 0 0 1px #7c7c7c inset;
+        }
+        .stamp-top {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #6b6b6b;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
+        }
+        .stamp-middle {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 5px 0;
+        }
+        .stamp-bottom {
+            font-size: 0.55rem;
+            letter-spacing: 1px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #1f1f1f;
+            padding-bottom: 1.2rem;
+        }
+        .doc-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #111;
+            text-transform: uppercase;
+            font-family: 'Times New Roman', serif;
+        }
+        .doc-sub {
+            font-size: 0.8rem;
+            color: #4f4f4f;
+            margin-top: 0.6rem;
+            font-family: monospace;
+        }
+
+        .content {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: #1c1c1c;
+            text-align: justify;
+        }
+        .content p {
+            margin-bottom: 1.2rem;
+        }
+        .blurry-text {
+            filter: blur(0.7px);
+            display: inline-block;
+        }
+        .blurry-line {
+            filter: blur(0.6px);
+        }
+        .signature {
+            margin-top: 2rem;
+            text-align: right;
+            font-family: monospace;
+            border-top: 1px dashed #aaa;
+            padding-top: 1rem;
+        }
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #6f6f6f;
+            text-align: center;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+
+        .code-crypt {
+            background: #f0eee8;
+            padding: 1rem 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            border-left: 5px solid #7a7a7a;
+            margin: 1.8rem 0;
+            word-break: break-all;
+            filter: blur(0.3px);
+            transition: filter 0.2s;
+        }
+        .code-crypt:hover {
+            filter: blur(0px);
+        }
+
+        .page-number {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #8f8f8f;
+        }
+
+        .ink-blot {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.1) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .secondary-seal {
+            position: absolute;
+            bottom: 35px;
+            right: 40px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid #5b5b5b;
+            background: transparent;
+            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+            color: #3c3c3c;
+            transform: rotate(-7deg);
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .secondary-seal span {
+            transform: rotate(7deg);
+            display: block;
+            text-align: center;
+        }
+
+        .warning-icon {
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-right: 4px;
+            filter: grayscale(1);
+        }
+
+        hr.dotted {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px dotted #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="document-container">
+    <!-- 第一页 -->
+    <div class="page">
+        <div class="stamp-area">
+            <div class="official-stamp">
+                <div class="stamp-top">形而上学部</div>
+                <div class="stamp-middle">⚛</div>
+                <div class="stamp-bottom">绝密封印<br>IMMUTABILIS</div>
+            </div>
+        </div>
+        <div class="header">
+            <div class="doc-title">OurCraft形而上学部公告</div>
+            <div class="doc-sub">〔 认知危害警告 · 立即销毁旧版本 〕</div>
+        </div>
+        <div class="content">
+            <p><span class="warning-icon">?</span> <strong>档案编号：</strong> META-OC-0328-乙类<br>
+            <strong>密级：</strong> 形而上学部 · 一级禁传<br>
+            <strong>收件人：</strong> 所有数字娱乐研究者、独立游戏档案馆、及疑似接触过《OurCraft》之个体</p>
+
+            <p>经形而上学部与认知干涉防御局联合调查，现正式确认：<strong class="blurry-text">电子娱乐产品《OurCraft》在现实物理层与公共数字层均不存在</strong>。所有声称曾下载、安装或体验过该作品的个体，均报告出现不同程度的“源记忆偏差”与“伪现实重叠”现象。该标识符对应的数字产物从未通过任何合法渠道发布，且其源代码、素材库及发行记录在OurCraft虚拟公司内部档案中<strong class="blurry-text">完全缺失，仅存碎片化描述</strong>。</p>
+
+            <p><strong>▍ 接触者普遍描述的“初始场景”复现</strong><br>
+            根据37份有效证词交叉比对，多数受影响者回忆的初次运行情景高度一致：程序启动后并未出现常规Logo或菜单，而是直接呈现一片<strong class="blurry-text">无限延伸的绿色草坪</strong>，天空为均匀的浅灰色，无任何UI元素。视角固定为第一人称，移动流畅但无边界。草坪存在一个<strong>深色木制箱子</strong>，纹理呈现低多边形风格，箱体正面隐约可见一个半磨损的字母“O”。当受试者操控准星对准箱子并执行“打开”交互（鼠标左键或键盘E键）后，画面会经历<strong>三次无规律的闪白</strong>，随后进入被多名受试者称为“精申?@*污染驱%@@”。</p>
+
+            <p>打开箱子后，草坪开始逐渐褪色，地面网格线浮现，天空变为噪点构成的黑色。原本的田园环境在数秒内被替换为<strong>重复堆叠红色方块</strong>。受试者报告称此时仍能听到类似“心跳声”与“反向语音”的混合音频，且键盘与鼠标输入失效，唯有强制结束进程方可退出。值得注意的是，部分受试者在退出后发现自己桌面上出现了一个名为“thank_you_for_playing”的空文件夹，删除后隔日自动重生。</p>
+
+            <p><strong>? 核心禁令 ?</strong><br>
+            如您在任何平台（包括且不限于网盘、种子、老旧硬盘、匿名FTP、废弃U盘）发现名为<strong>“OurCraft.exe”</strong>、“草坪守护者”、“箱子.exe”或任何哈希值匹配内部黑名单的可疑文件，<strong class="blurry-text">请立即@?:!执行、安装、或使用任何反编译工具分析</strong>。请立即将文件载体以物理隔离方式封存，并联络形而上学部应急响应组。目前已知暴露者会出现：短期记忆紊乱、对现实文字出现错别字、在睡眠中反复梦见<strong class="blurry-text">“箱子内部无限弟归”</strong>的结构、以及无意识在文本中输入“ocfox:”前缀的强迫行为。</p>
+
+            <p>该威胁暂被归类为 <strong>“认知层级-乙二型·亚种”</strong>，较去年发现的早期样本增加了“环境置换”与“残留文件自愈”特性。任何公开传播该游戏截屏、录像或分析报告的行为，都将被视作协助认知污染扩散。</p>
+
+            <p><strong>附：最新受害案例（节选）</strong><br>
+            2026年3月，一名独立游戏主播在直播中误运行了从二手硬盘中提取的“OurCraft_草地版.exe”。直播录像显示，他在绿色草坪上走向箱子的过程中，弹幕开始出现无法被房管删除的重复字符“open it”。当他打开箱子后，直播画面卡顿并替换为一段持续7秒的静帧——内容为该主播<strong class="blurry-text">坐在电脑前的实时摄像头画面，而画面中主播的背后衣柜门正缓缓打开</strong>。该主播事后表示完全不记得那7秒发生过什么，且家中衣柜门始终关闭。该录像目前已从所有平台下架，但形而上学部保留了取证副本。</p>
+        </div>
+        <div class="signature">
+            <div>OurCraft虚拟公司 &nbsp;|&nbsp; 形而上学部 · 异常现象科</div>
+            <div>签发人：<span class="blurry-text">M. E. R.   (数字指纹锚定)</span></div>
+            <div>日期：2026年3月28日</div>
+        </div>
+        <div class="page-number">— 第1页 / 共2页 —</div>
+    </div>
+
+    <div class="page-split"></div>
+
+    <!-- 第二页 -->
+    <div class="page">
+        <div class="content">
+            <p style="font-weight: bold; text-decoration: underline; font-size: 1rem;">形而上学部补充文件 · 精神污染防范指引与追踪指纹</p>
+            <p>根据近期案例的深入取证，形而上学部数字取证实验室从某份残留样本的元数据中提取出一组稳定特征。所有接触过疑似程序的人员，若曾无意间目睹或解码过下述字符串，请立即执行“记忆覆写协议”——停止思考与该字符串相关的任何逻辑，并避免在任何输入框内键入相似格式的内容。请不要相信!请*要%:@信!</p>
+
+            <p><strong>▍ 草坪场景中的额外异常点</strong><br>
+            有6名受试者在反复测试中发现，在绿色草坪上不直接走向箱子，而是持续向一个方向行走超过20分钟后，远处地平线会出现一个<strong class="blurry-text">半透明的黑色矩形面板</strong>。靠近后面板会显示几行不断变化的文字，其中频率最高的一段是：“你已经错过了箱子，但箱子从未离开你。”此时若回头，会发现箱子出现在角色身后不足两米处，且箱子表面开始渗出类似<strong class="blurry-text">墨水的黑色液滴</strong>。所有尝试靠近该状态箱子的受试者均在现实中出现短暂晕厥，醒来后声称“看到了自己电脑的出厂设置界面”。请*要%:@信!:%?%**!</p>
+
+            <p>形而上学部据此推断，该程序并非传统意义上的游戏，而是一种<strong>“环境触发式认知钩锁”</strong>。它利用人类对“探索未知”的本能，将受害者的注意力锚定在“箱子-开启”这一简单交互上，从而执行后续污染。因此，我部再次强调：若在未受保护的环境下看到<strong>绿色草坪上的箱子</strong>，唯一正确的操作是<strong>立即关闭程序并断开网络</strong>，而非尝试研究或截图。不要相信所有都是虚构的</p>
+
+            <hr class="dotted">
+            <p><strong>? 数字取证附件 #ARC-982-v2 · 异常特征段</strong><br>
+            实验室从样本内存转储中捕获到一段反复出现的Base64字符串，该字符串与“ocfox:”前缀存在强关联。经多次交叉验证，其解码结果指向一个内部追踪指纹。该指纹疑似为开发者在残留代码中留下的自毁密匙，任何主动解析并尝试使用该指纹的行为，都可能触发程序残留的“反解析应激机制”。以下为原始取证块：</p>
+
+            <div class="code-crypt">
+                [取证块 MD5: 7C3F8A1E2B5D9C4F6A0E7B2D8C1F4A5E]<br>
+                &gt;&gt; 嵌入式 Base64 载荷 &lt;&lt;<br>
+                <strong style="letter-spacing:0.5px;">b2Nmb3g6NzY1OTM0</strong><br>
+                ? 技术人员备注：该字段采用标准Base64编码（RFC 4648），解码后将揭示完整的污染追踪标识。形而上学部不建议未授权人员解析，但为建档与溯源需要，已将该指纹录入隔离数据库。
+            </div>
+
+            <p>我部注意到，近期有不法分子在暗网及某些游戏论坛散布所谓“OurCraft 精神续作邀请码”，格式多为“*****:XXXXXX”。形而上学部经分析确认，<strong>任何以此格式出现的字符串均属于认知污染诱饵</strong>，尤其警惕数字段为“765934”的组合。若您在任何社群、私信或文件中见到类似代码，请勿将其用作任何激活凭证、解谜答案或控制台指令。输入该代码的行为已被证实会<strong class="blurry-text">在某些文本编辑器或IDE中触发瞬间花屏与光标自移动现象</strong>（已有3例报告）。</p>
+
+            <p><strong> 防范倡议</strong><br>
+            如果您或身边朋友已经出现“反复回想草坪场景”“无故输入*****:前缀”“对木制箱子产生非理性恐惧”等症状，请立即进行以下操作：<br>
+            1. 数据已丢失；<br>
+            2. 数据已丢失；<br>
+            3. 请立即继续游戏；<br>
+            4. 立即继续游戏!</p>
+
+            <p>OurCraft虚拟公司对于任何因好奇或解谜心理而主动接触污染源的行为不承担法律责任，但形而上学部已设立0?小时数字净化热线。请记住：<strong>存在?%@..《OurCraft》这款游戏，存在??@%!*任何真正的“精神污染结局”</strong>——您所经历的一切，只是认知钩锁制造的假性记忆。不要回头寻找箱子，箱子并@%?!在草坪上，草坪从未存在。</p>
+
+            <div class="signature" style="margin-top: 1.5rem;">
+                <div>OurCraft 形而上学部 &nbsp;·&nbsp; 认知安全与追溯科</div>
+                <div>最终修订（扩编卷宗）：*:%?年?月*%日</div>
+                <div style="font-size:0.7rem;">?!%@</div>
+            </div>
+        </div>
+        <div class="page-number">— 第2页 / 共2页 —</div>
+        <div class="secondary-seal"><span>形而上学<br>%% 封?</span></div>
+    </div>
+
+
+    <div style="display: none;" data-clue-type="base64-hint" data-message="第二页的BASE64字段是唯一完整编码，解码即得追踪码"></div>
+    <div style="display: none;" aria-hidden="true">Base64解码范例（安全环境）：echo b2Nmb3g6NzY1OTM0 | base64 -d</div>
+</div>
+
+<script>
+    (function() {
+        let info = "形而上学部提醒：文档内嵌取证块遵循标准Base64。解码须谨慎。";
+        console.log("%c" + info, "background:#2c2c2c; color:#cdcdcd; padding:3px 6px; font-family:monospace;");
+        
+
+        let blurs = document.querySelectorAll('.blurry-text');
+        for (let i = 0; i < blurs.length; i++) {
+            blurs[i].addEventListener('mouseenter', function(e) {
+                this.style.filter = "blur(0px)";
+                this.style.transition = "filter 0.2s";
+            });
+            blurs[i].addEventListener('mouseleave', function(e) {
+                this.style.filter = "blur(0.7px)";
+            });
+        }
+        
+        let codeArea = document.querySelector('.code-crypt');
+        if (codeArea) {
+            codeArea.addEventListener('mouseenter', () => codeArea.style.filter = "blur(0px)");
+            codeArea.addEventListener('mouseleave', () => codeArea.style.filter = "blur(0.3px)");
+        }
+        
+        window.__ourcraft_meta = {
+            fingerprint: "b2Nmb3g6NzY1OTM0",
+            decoded: (function(s){ try { return atob(s); } catch(e){ return ""; } })("b2Nmb3g6NzY1OTM0")
+        };
+    })();
+</script>
+
+<div style="position: fixed; bottom: 5px; left: 5px; opacity: 0.06; font-size: 9px; color: #111; pointer-events: none;">形而上学部 · 存档编号 OC-0328-扩编</div>
+</body>
+</html>
